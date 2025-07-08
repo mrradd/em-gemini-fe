@@ -4,6 +4,7 @@ import type ChatModel from "../models/ChatModel";
 import ChatApi from "../apis/ChatApi";
 import type ChatThreadModel from "../models/ChatThreadModel";
 import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
+import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 
 export default class ChatStore {
   
@@ -16,6 +17,11 @@ export default class ChatStore {
 
   async createNewChatThread(): Promise<ChatThreadResponseDto | null> {
     const response: ChatThreadResponseDto | null = await ChatApi.createNewChatThread();
+    return response;
+  }
+
+  async getChatThreads(): Promise<GetAllChatThreadsResponseDto | null> {
+    const response: GetAllChatThreadsResponseDto | null = await ChatApi.getAllChatThreads();
     return response;
   }
 

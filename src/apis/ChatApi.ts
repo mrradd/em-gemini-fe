@@ -3,6 +3,7 @@ import type ChatResponseDto from "../dtos/ChatResponseDto";
 import type GetAllChatsResponseDto from "../dtos/GetAllChatsResponseDto";
 import type CreateChatThreadResponseDto from "../dtos/CreateChatThreadResponseDto";
 import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
+import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 
 export default class ChatApi {
 
@@ -42,6 +43,27 @@ export default class ChatApi {
     }
     catch (error: any) {
       console.log(`$$$ ERROR getAllChats: ${error.message}`);
+      return null;
+    }
+  }
+
+  /**
+   * Gets all chat threads from the database.
+   * @returns 
+   */
+  public static async getAllChatThreads(): Promise<GetAllChatThreadsResponseDto | null> {
+    try {
+      let response = await axios.get<GetAllChatThreadsResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/all`);
+
+      console.log(response);
+      if(response.status !== 200) {
+        throw new Error (`Failed to get the chat threads... ${response.status}`);
+      }
+
+      return response.data;
+    }
+    catch (error: any) {
+      console.log(`$$$ ERROR getAllChatThreads: ${error.message}`);
       return null;
     }
   }
