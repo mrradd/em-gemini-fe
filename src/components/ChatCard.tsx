@@ -4,14 +4,14 @@ import { ChatRole } from "../models/ChatRole";
 
 export interface ChatCardProps {
   text: string;
-  chatType: string
+  chatRole: string
 }
 
-const ChatCard = ({text, chatType}: ChatCardProps) => {
+const ChatCard = ({text, chatRole}: ChatCardProps) => {
   return (
     <>
       <div className="chat_card">
-        {chatType === ChatRole.user ? "User:\n" : "EM:\n"}
+        {chatRole === ChatRole.user ? "User:\n" : "EM:\n"}
         <Markdown>{text}</Markdown>
       </div>
     </>
