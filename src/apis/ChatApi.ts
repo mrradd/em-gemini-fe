@@ -30,8 +30,28 @@ export default class ChatApi {
   }
 
   /**
+   * Delete a Chat Thread by ID.
+   * @returns true on success otherwise false.
+   */
+  public static async deleteChatThread(threadId: string): Promise<boolean> {
+    try {
+      let response = await axios.delete<any>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/${threadId}`);
+
+      if(response?.status !== 200) {
+        throw new Error (`Failed to create the Chat Thread... ${response.status}`);
+      }
+
+      return true;
+    }
+    catch (error: any) {
+      console.log(`$$$ ERROR deleteChatThread: ${error.message}`);
+      return false;
+    }
+  }
+
+  /**
    * Gets all chats from the database.
-   * @returns 
+   * @returns GetAllChatsResponseDto object on success or null otherwise.
    */
   public static async getAllChats(): Promise<GetAllChatsResponseDto | null> {
     try {
@@ -52,7 +72,7 @@ export default class ChatApi {
   /**
    * Gets all data for a single chat thread.
    * @param chatThreadId - ID of the chat thread to find.
-   * @returns 
+   * @returns ChatThreadResponseDto object on success or null otherwise
    */
   public static async getChatThreadData(chatThreadId: string): Promise<ChatThreadResponseDto | null> {
     try {
@@ -72,7 +92,7 @@ export default class ChatApi {
 
   /**
    * Gets all chat threads from the database.
-   * @returns 
+   * @returns GetAllChatThreadsResponseDto object on success or null otherwise.
    */
   public static async getAllChatThreads(): Promise<GetAllChatThreadsResponseDto | null> {
     try {

@@ -2,7 +2,7 @@ import { observer } from "mobx-react";
 import { UseGlobalStores } from "../stores/UseGlobalStores";
 import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
 import type ChatThreadModel from "../models/ChatThreadModel";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 import { dtoToChatThreadModel } from "../models/ChatThreadModel";
 
@@ -42,16 +42,19 @@ const ChatThreadList = () => {
     } as ChatThreadModel)
   };
 
-  const deleteThread = (threadId: string) => {
-    console.log(`$$$ clicked deleteThread ${threadId}`);
+  const deleteThread = async (threadId: string) => {
+    const result:boolean = await chatStore.deleteChatThread(threadId);
+
+    if(result) {
+      chatStore.removeChatThread(threadId);
+    }
   };
 
-  const editThreadDetails = (threadId: string) => {
+  const editThreadDetails = async (threadId: string) => {
     console.log(`$$$ clicked editThreadDetails ${threadId}`);
   };
 
   const viewThread = async (threadId: string) => {
-    console.log(`$$$ clicked viewThread ${threadId}`);
     const thread: ChatThreadResponseDto | null = await chatStore.getChatThread(threadId);
 
     if(!thread) {
@@ -61,10 +64,10 @@ const ChatThreadList = () => {
     chatStore.setWorkingChatThread(thread!);
   };
 
-  const renderChatThreads = () => {
+  const renderChatThreads = useMemo(() => {
     const threads = chatStore.chatThreads.map((thread, index) => {
       return (
-        <div key={index}>
+        <div key={index}> 
           <span>{thread.title} - {thread.createdDate}</span>
           <button onClick={() => editThreadDetails(thread.id)}>Edit</button>
           <button onClick={() => deleteThread(thread.id)}>Delete</button>
@@ -74,12 +77,12 @@ const ChatThreadList = () => {
     });
 
     return threads;
-  };
+  }, [chatStore.chatThreads, chatStore.chatThreads?.length]);
 
   return (
     <>
       <div className="thread_container">
-        {renderChatThreads()}
+        {renderChatThreads}
       </div>
       <div className="thread_buttons_container">
         <button onClick={createNewThread}>New Thread</button>

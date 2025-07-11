@@ -34,6 +34,11 @@ export default class ChatStore {
     return response;
   }
 
+  async deleteChatThread(threadId: string): Promise<boolean> {
+    const response: boolean = await ChatApi.deleteChatThread(threadId);
+    return response;
+  }
+
   async getChatThread(chatThreadId: string): Promise<ChatThreadResponseDto | null> {
     const response: ChatThreadResponseDto | null = await ChatApi.getChatThreadData(chatThreadId);
     return response;
@@ -47,6 +52,11 @@ export default class ChatStore {
   async sendChatRequest(prompt: string): Promise<ChatResponseDto | null> {
     const response: ChatResponseDto | null = await ChatApi.sendChat(prompt, this.workingChatThread?.id);
     return response;
+  }
+
+  removeChatThread(threadId: string) {
+    const idx = this.chatThreads.findIndex((thread) => { return thread.id === threadId; });
+    this.chatThreads.splice(idx, 1)
   }
 
   setWorkingChatThread(thread: ChatThreadResponseDto) {
