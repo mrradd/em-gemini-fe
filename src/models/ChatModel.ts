@@ -1,4 +1,17 @@
+import type ChatResponseDto from "../dtos/ChatResponseDto";
+
 export default interface ChatModel {
-  role: string; //'user' or 'system'. If it's not from a user, it's always system.
-  text: string;
+  id: string; //UUID
+  chatThreadId: string //UUID
+  response: string;
+  prompt: string;
+}
+
+export const dtoToChatModel = (chat: ChatResponseDto) => {
+  return {
+    id: chat.id,
+    chatThreadId: chat.chat_thread_id,
+    response: chat.response,
+    prompt: chat.prompt,
+  } as ChatModel;
 }

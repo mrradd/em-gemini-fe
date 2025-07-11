@@ -1,4 +1,6 @@
 export default interface ChatResponseDto {
-  role: string; //'user' or 'model'
-  text: string;
+  id: string; //UUID
+  chat_thread_id: string //UUID
+  response: string;
+  prompt: string;
 }

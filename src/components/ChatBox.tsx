@@ -1,9 +1,9 @@
 import { observer } from "mobx-react";
 import { UseGlobalStores } from "../stores/UseGlobalStores";
+import { useState } from "react";
 import type ChatResponseDto from "../dtos/ChatResponseDto";
 import type ChatModel from "../models/ChatModel";
-import { useState } from "react";
-import { ChatRole } from "../models/ChatRole";
+import { dtoToChatModel } from "../models/ChatModel";
 
 interface ChatBoxState {
   awaitingResponse: boolean,
@@ -33,25 +33,11 @@ const ChatBox = () => {
         };
       });
 
-      chatStore.appendChat({
-        role: ChatRole.user,
-        text: chatBoxStore.textAreaContent,
-      } as ChatModel)
-  
-      const chat: ChatResponseDto | null = await chatStore.sendChatRequest(chatBoxStore.textAreaContent);
-  
-      if(!chat) {
-        chatStore.appendChat({
-          role: ChatRole.model,
-          text: "--There was an issue sending the chat request--"
-        } as ChatModel)
-      }
-      else {
-        chatStore.appendChat({
-          role: chat.role,
-          text: chat.text
-        } as ChatModel);
-      }
+      const response: ChatResponseDto | null = await chatStore.sendChatRequest(chatBoxStore.textAreaContent);
+
+      console.log(response);
+      const chat: ChatModel = dtoToChatModel(response!);
+      chatStore.appendChatToThread(chat);
     }
     finally {
       setState((prev) => {

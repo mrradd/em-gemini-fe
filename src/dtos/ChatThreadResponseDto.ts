@@ -1,4 +1,4 @@
-import type ChatModel from "../models/ChatModel";
+import type ChatResponseDto from "./ChatResponseDto";
 
 export default interface ChatThreadResponseDto {
   id: string;
@@ -6,5 +6,5 @@ export default interface ChatThreadResponseDto {
   created_date: string;
   updated_date: string;
 
-  chats: ChatModel[];
+  chats: ChatResponseDto[];
 }

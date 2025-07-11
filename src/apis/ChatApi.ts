@@ -4,6 +4,8 @@ import type GetAllChatsResponseDto from "../dtos/GetAllChatsResponseDto";
 import type CreateChatThreadResponseDto from "../dtos/CreateChatThreadResponseDto";
 import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
+import type GetChatThreadResponseDto from "../dtos/GetChatThreadResponseDto";
+import type GetChatResponseDto from "../dtos/GetChatResponseDto";
 
 export default class ChatApi {
 
@@ -48,6 +50,27 @@ export default class ChatApi {
   }
 
   /**
+   * Gets all data for a single chat thread.
+   * @param chatThreadId - ID of the chat thread to find.
+   * @returns 
+   */
+  public static async getChatThreadData(chatThreadId: string): Promise<ChatThreadResponseDto | null> {
+    try {
+      let response = await axios.get<GetChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/${chatThreadId}`);
+      
+      if(response.status !== 200) {
+        throw new Error (`Failed to get the chat thread... ${response.status}`);
+      }
+
+      return response.data.thread;
+    }
+    catch (error: any) {
+      console.log(`$$$ ERROR getChatThreadData: ${error.message}`);
+      return null;
+    }
+  }
+
+  /**
    * Gets all chat threads from the database.
    * @returns 
    */
@@ -71,17 +94,18 @@ export default class ChatApi {
   /**
    * Sends a request for a chat with the given prompt.
    * @param chatPrompt - User prompt.
+   * @param chatThread - ID of the chat thread this chat belongs to.
    * @returns ChatReponseDto on sucess or null otherwise.
    */
-  public static async sendChat(chatPrompt: string): Promise<ChatResponseDto | null> {
+  public static async sendChat(chatPrompt: string, chatThreadId: string): Promise<ChatResponseDto | null> {
     try {
-      let response = await axios.post<ChatResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat`, {prompt: chatPrompt});
+      let response = await axios.post<GetChatResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat`, {prompt: chatPrompt, chatThreadId: chatThreadId});
 
       if(response.status !== 201) {
         throw new Error (`Failed to send the chat... ${response.status}`);
       }
 
-      return response.data;
+      return response.data.chat;
     }
     catch (error: any) {
       console.log(`$$$ ERROR sendChat: ${error.message}`);

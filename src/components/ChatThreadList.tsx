@@ -42,16 +42,23 @@ const ChatThreadList = () => {
     } as ChatThreadModel)
   };
 
-  const deleteThread = () => {
-    console.log("$$$ clicked deleteThread");
+  const deleteThread = (threadId: string) => {
+    console.log(`$$$ clicked deleteThread ${threadId}`);
   };
 
-  const editThreadDetails = () => {
-    console.log("$$$ clicked editThreadDetails");
+  const editThreadDetails = (threadId: string) => {
+    console.log(`$$$ clicked editThreadDetails ${threadId}`);
   };
 
-  const viewThread = () => {
-    console.log("$$$ clicked viewThread");
+  const viewThread = async (threadId: string) => {
+    console.log(`$$$ clicked viewThread ${threadId}`);
+    const thread: ChatThreadResponseDto | null = await chatStore.getChatThread(threadId);
+
+    if(!thread) {
+      alert("There was an issue getting the thread.");
+    }
+    console.log(thread);
+    chatStore.setWorkingChatThread(thread!);
   };
 
   const renderChatThreads = () => {
@@ -59,9 +66,9 @@ const ChatThreadList = () => {
       return (
         <div key={index}>
           <span>{thread.title} - {thread.createdDate}</span>
-          <button onClick={editThreadDetails}>Edit</button>
-          <button onClick={deleteThread}>Delete</button>
-          <button onClick={viewThread}>View</button>
+          <button onClick={() => editThreadDetails(thread.id)}>Edit</button>
+          <button onClick={() => deleteThread(thread.id)}>Delete</button>
+          <button onClick={() => viewThread(thread.id)}>View</button>
         </div>
       );
     });

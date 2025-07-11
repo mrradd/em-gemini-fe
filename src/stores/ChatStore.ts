@@ -5,18 +5,37 @@ import ChatApi from "../apis/ChatApi";
 import type ChatThreadModel from "../models/ChatThreadModel";
 import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
+import { dtoToChatThreadModel } from "../models/ChatThreadModel";
 
 export default class ChatStore {
-  
-  chats: ChatModel[] = [];
-  chatThreads: ChatThreadModel[] = [];
+  chats = [] as ChatModel[];
+  chatThreads = [] as ChatThreadModel[];
+  workingChatThread = {} as ChatThreadModel;
 
   constructor() {
     makeAutoObservable(this);
   }
 
+  appendChat(chat: ChatModel) {
+    this.chats = this.chats.concat(chat);
+  }
+
+  appendChatThread(chatThread: ChatThreadModel) {
+    this.chatThreads = this.chatThreads.concat(chatThread);
+  }
+
+  appendChatToThread(chat: ChatModel) {
+    console.log(`$$$ chatModel: ${JSON.stringify(chat)}`);
+    this.workingChatThread.chats = this.workingChatThread.chats.concat(chat);
+  }
+
   async createNewChatThread(): Promise<ChatThreadResponseDto | null> {
     const response: ChatThreadResponseDto | null = await ChatApi.createNewChatThread();
+    return response;
+  }
+
+  async getChatThread(chatThreadId: string): Promise<ChatThreadResponseDto | null> {
+    const response: ChatThreadResponseDto | null = await ChatApi.getChatThreadData(chatThreadId);
     return response;
   }
 
@@ -26,15 +45,11 @@ export default class ChatStore {
   }
 
   async sendChatRequest(prompt: string): Promise<ChatResponseDto | null> {
-    const response: ChatResponseDto | null = await ChatApi.sendChat(prompt);
+    const response: ChatResponseDto | null = await ChatApi.sendChat(prompt, this.workingChatThread?.id);
     return response;
   }
 
-  async appendChat(chat: ChatModel) {
-    this.chats = this.chats.concat(chat);
-  }
-
-  async appendChatThread(chatThread: ChatThreadModel) {
-    this.chatThreads = this.chatThreads.concat(chatThread);
+  setWorkingChatThread(thread: ChatThreadResponseDto) {
+    this.workingChatThread = dtoToChatThreadModel(thread);
   }
 }
