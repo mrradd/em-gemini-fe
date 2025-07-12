@@ -1,5 +1,6 @@
 import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
 import type ChatModel from "./ChatModel";
+import { dtoToChatModel } from "./ChatModel";
 
 export default interface ChatThreadModel {
   id: string;
@@ -10,11 +11,17 @@ export default interface ChatThreadModel {
 }
 
 export const dtoToChatThreadModel = ({id, title, created_date, updated_date, chats}: ChatThreadResponseDto): ChatThreadModel => {
+
+  const chatModels: ChatModel[] = [];
+  chats?.forEach((chatDto) => {
+    chatModels.push(dtoToChatModel(chatDto));
+  });
+
   return {
     id: id,
     title: title,
     createdDate: created_date,
     updatedDate: updated_date,
-    chats: chats,
+    chats: chatModels,
   } as ChatThreadModel;
 };

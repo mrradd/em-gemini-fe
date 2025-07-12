@@ -1,0 +1,33 @@
+.chat_page_container {
+  display: grid;
+  grid-template-columns: 25% fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "thread_list chat_text"
+    "thread_list chat_text"
+    "thread_list chat_box";
+}
+
+.chat_thread_content {
+  grid-area: thread_list;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  padding: 1rem;
+}
+
+.chat_content {
+  grid-area: chat_text;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  padding: 1rem;
+}
+
+.chat_box_content {
+  grid-area: chat_box;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  padding: 1rem;
+}

@@ -25,7 +25,6 @@ export default class ChatStore {
   }
 
   appendChatToThread(chat: ChatModel) {
-    console.log(`$$$ chatModel: ${JSON.stringify(chat)}`);
     this.workingChatThread.chats = this.workingChatThread.chats.concat(chat);
   }
 
