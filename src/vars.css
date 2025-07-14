@@ -1,0 +1,15 @@
+:root {
+  --background-color-primary: black;
+  --background-color-secondary: #222;
+  --border-radius-md: 1rem;
+  --border-radius-sm: .5rem;
+  --border-radius-tiny: .25rem;
+  --border-width: 1px;
+  --button-hover-color: gray;
+  --font-size-md: 1rem;
+  --font-color-primary: white;
+  --grid-gap: .5rem;
+  --margin-md: 1rem;
+  --padding-md: 1rem;
+  --padding-sm: .5rem;
+}

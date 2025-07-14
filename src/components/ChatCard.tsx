@@ -10,8 +10,8 @@ export interface ChatCardProps {
 const ChatCard = ({text, chatRole}: ChatCardProps) => {
   return (
     <>
-      <div className="chat_card">
-        {chatRole === ChatRole.user ? "User:\n" : "EM:\n"}
+      <div className={`chat_card ${chatRole === ChatRole.user ? "chat_user" : "chat_system"}`}>
+        <b>{chatRole === ChatRole.user ? "You\n" : "Electric Meatball\n"}</b>
         <Markdown>{text}</Markdown>
       </div>
     </>

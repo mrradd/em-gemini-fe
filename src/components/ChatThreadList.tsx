@@ -5,6 +5,10 @@ import type ChatThreadModel from "../models/ChatThreadModel";
 import { useEffect, useMemo, useRef } from "react";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 import { dtoToChatThreadModel } from "../models/ChatThreadModel";
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 
 /**
  * Displays a list of Chat Threads from the database. Also allows for pressing a button to create a new Chat Thread.
@@ -67,11 +71,11 @@ const ChatThreadList = () => {
   const renderChatThreads = useMemo(() => {
     const threads = chatStore.chatThreads.map((thread, index) => {
       return (
-        <div key={index}> 
-          <span>{thread.title} - {thread.createdDate}</span>
-          <button onClick={() => editThreadDetails(thread.id)}>Edit</button>
-          <button onClick={() => deleteThread(thread.id)}>Delete</button>
-          <button onClick={() => viewThread(thread.id)}>View</button>
+        <div key={index} className="thread_item"> 
+          <div>{thread.title} - {thread.createdDate}</div>
+          <button onClick={() => editThreadDetails(thread.id)}><EditNoteOutlinedIcon/></button>
+          <button onClick={() => deleteThread(thread.id)}><DeleteForeverOutlinedIcon/></button>
+          <button onClick={() => viewThread(thread.id)}><VisibilityOutlinedIcon/></button>
         </div>
       );
     });
@@ -81,12 +85,14 @@ const ChatThreadList = () => {
 
   return (
     <>
+      <h1>Electric Meatball</h1>
+      <div className="thread_buttons_container">
+        <button onClick={createNewThread}><AddCommentOutlinedIcon/></button>
+      </div>
       <div className="thread_container">
         {renderChatThreads}
       </div>
-      <div className="thread_buttons_container">
-        <button onClick={createNewThread}>New Thread</button>
-      </div>
+
     </>
   );
 };
