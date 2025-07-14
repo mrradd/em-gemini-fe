@@ -4,6 +4,8 @@ import { useState } from "react";
 import type ChatResponseDto from "../dtos/ChatResponseDto";
 import type ChatModel from "../models/ChatModel";
 import { dtoToChatModel } from "../models/ChatModel";
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 
 interface ChatBoxState {
   awaitingResponse: boolean,
@@ -53,8 +55,8 @@ const ChatBox = () => {
     <>
       <textarea value={chatBoxStore.textAreaContent} onChange={(e) => updateChatText(e.target.value)}></textarea>
       <div className="chatbox_button_container">
-        <button onClick={sendChatRequestAndUpdate} disabled={state.awaitingResponse}>
-          {state.awaitingResponse ? "Waiting..." : "Send Request"}
+        <button title="Send Prompt" onClick={sendChatRequestAndUpdate} disabled={state.awaitingResponse}>
+          {state.awaitingResponse ? <PendingOutlinedIcon/> : <SendOutlinedIcon/>}
         </button>
       </div>
     </>

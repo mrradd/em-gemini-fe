@@ -73,9 +73,9 @@ const ChatThreadList = () => {
       return (
         <div key={index} className="thread_item"> 
           <div>{thread.title} - {thread.createdDate}</div>
-          <button onClick={() => editThreadDetails(thread.id)}><EditNoteOutlinedIcon/></button>
-          <button onClick={() => deleteThread(thread.id)}><DeleteForeverOutlinedIcon/></button>
-          <button onClick={() => viewThread(thread.id)}><VisibilityOutlinedIcon/></button>
+          <button title="Edit Thread" onClick={() => editThreadDetails(thread.id)}><EditNoteOutlinedIcon/></button>
+          <button title="Delete Thread Forever" onClick={() => deleteThread(thread.id)}><DeleteForeverOutlinedIcon/></button>
+          <button title="View Thread" onClick={() => viewThread(thread.id)}><VisibilityOutlinedIcon/></button>
         </div>
       );
     });
@@ -87,7 +87,7 @@ const ChatThreadList = () => {
     <>
       <h1>Electric Meatball</h1>
       <div className="thread_buttons_container">
-        <button onClick={createNewThread}><AddCommentOutlinedIcon/></button>
+        <button title="New Chat Thread" onClick={createNewThread}><AddCommentOutlinedIcon/></button>
       </div>
       <div className="thread_container">
         {renderChatThreads}

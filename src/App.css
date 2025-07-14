@@ -13,5 +13,14 @@
 }
 
 button {
+  background: none;
+  color: white;
+  border: none;
   border-radius: var(--border-radius-tiny);
+}
+
+button:hover {
+  background: var(--button-hover-color);
+  color: white;
+  border: none;
 }

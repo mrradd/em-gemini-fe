@@ -52,18 +52,6 @@
   margin-bottom: var(--margin-md);
 }
 
-.thread_item button, .thread_buttons_container button {
-  background: none;
-  color: white;
-  border: none;
-}
-
-.thread_item button:hover, .thread_buttons_container button:hover {
-  background: var(--button-hover-color);
-  color: white;
-  border: none;
-}
-
 .thread_item {
   display: flex;
   align-items: center;
