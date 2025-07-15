@@ -55,7 +55,13 @@ export default class ChatStore {
 
   removeChatThread(threadId: string) {
     const idx = this.chatThreads.findIndex((thread) => { return thread.id === threadId; });
-    this.chatThreads.splice(idx, 1)
+
+    //If we are viewing the Thread, we want to remove it from view.
+    if(threadId === this.workingChatThread.id) {
+      this.workingChatThread = {} as ChatThreadModel;
+    }
+
+    this.chatThreads.splice(idx, 1);
   }
 
   setWorkingChatThread(thread: ChatThreadResponseDto) {

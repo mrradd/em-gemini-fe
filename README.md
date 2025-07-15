@@ -1,15 +1,9 @@
-# Electric Meatball - Gemini
+# Electric Meatball - Gemini (em-gemini-fe)
 
-The Gemini version of the Electric Meatball made with React.
+The Gemini version of the Electric Meatball made with React and typescript.
 
-## TODOs (not in any order)
-- [x] Load all chat threads for display.
-- [] Able to select a chat thread to view.
-- [] Edit chat thread details.
-- [] Delete a chat thread.
-- [] Display all chats in a chat thread.
-- [] Append chat history to prompt to allow for a continuous chat experience.
-- [x] Allow for displaying Markdown.
-- [x] Send a chat request.
-- [x] Save a chat request and response to the db.
-- [] Style the chat screen.
+## How to use
+
+After running `npm install` the app can be started using `npm start`.
+
+You will also need to run the backend for this project [`em-gemini-be`](https://github.com/mrradd/em-gemini-be)
