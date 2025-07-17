@@ -52,6 +52,13 @@
   margin-bottom: var(--margin-md);
 }
 
+/* Wrap the preformatted text. */
+.chat_card pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 .thread_item {
   display: flex;
   align-items: center;
