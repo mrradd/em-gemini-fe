@@ -53,7 +53,7 @@
 }
 
 /* Wrap the preformatted text. */
-.chat_card pre {
+pre {
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
