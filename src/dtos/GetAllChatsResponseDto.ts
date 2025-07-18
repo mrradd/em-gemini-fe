@@ -1,5 +1,5 @@
-import type ChatResponseDto from "./ChatResponseDto";
+import type ChatDto from "./ChatDto";
 
 export default interface GetAllChatsResponseDto {
-  chats: ChatResponseDto[];
+  chats: ChatDto[];
 }

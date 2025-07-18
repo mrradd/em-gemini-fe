@@ -1,9 +1,9 @@
 import { makeAutoObservable } from "mobx";
-import type ChatResponseDto from "../dtos/ChatResponseDto";
+import type ChatDto from "../dtos/ChatDto";
 import type ChatModel from "../models/ChatModel";
 import ChatApi from "../apis/ChatApi";
 import type ChatThreadModel from "../models/ChatThreadModel";
-import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
+import type ChatThreadDto from "../dtos/ChatThreadDto";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 import { dtoToChatThreadModel } from "../models/ChatThreadModel";
 
@@ -28,8 +28,8 @@ export default class ChatStore {
     this.workingChatThread.chats = this.workingChatThread.chats.concat(chat);
   }
 
-  async createNewChatThread(): Promise<ChatThreadResponseDto | null> {
-    const response: ChatThreadResponseDto | null = await ChatApi.createNewChatThread();
+  async createNewChatThread(): Promise<ChatThreadDto | null> {
+    const response: ChatThreadDto | null = await ChatApi.createNewChatThread();
     return response;
   }
 
@@ -38,8 +38,8 @@ export default class ChatStore {
     return response;
   }
 
-  async getChatThread(chatThreadId: string): Promise<ChatThreadResponseDto | null> {
-    const response: ChatThreadResponseDto | null = await ChatApi.getChatThreadData(chatThreadId);
+  async getChatThread(chatThreadId: string): Promise<ChatThreadDto | null> {
+    const response: ChatThreadDto | null = await ChatApi.getChatThreadData(chatThreadId);
     return response;
   }
 
@@ -48,8 +48,8 @@ export default class ChatStore {
     return response;
   }
 
-  async sendChatRequest(prompt: string): Promise<ChatResponseDto | null> {
-    const response: ChatResponseDto | null = await ChatApi.sendChat(prompt, this.workingChatThread?.id);
+  async sendChatRequest(prompt: string): Promise<ChatDto | null> {
+    const response: ChatDto | null = await ChatApi.sendChat(prompt, this.workingChatThread?.id);
     return response;
   }
 
@@ -64,7 +64,7 @@ export default class ChatStore {
     this.chatThreads.splice(idx, 1);
   }
 
-  setWorkingChatThread(thread: ChatThreadResponseDto) {
+  setWorkingChatThread(thread: ChatThreadDto) {
     this.workingChatThread = dtoToChatThreadModel(thread);
   }
 }

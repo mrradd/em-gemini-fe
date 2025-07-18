@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import { UseGlobalStores } from "../stores/UseGlobalStores";
 import { useState } from "react";
-import type ChatResponseDto from "../dtos/ChatResponseDto";
+import type ChatDto from "../dtos/ChatDto";
 import type ChatModel from "../models/ChatModel";
 import { dtoToChatModel } from "../models/ChatModel";
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
@@ -35,7 +35,7 @@ const ChatBox = () => {
         };
       });
 
-      const response: ChatResponseDto | null = await chatStore.sendChatRequest(chatBoxStore.textAreaContent);
+      const response: ChatDto | null = await chatStore.sendChatRequest(chatBoxStore.textAreaContent);
 
       console.log(response);
       const chat: ChatModel = dtoToChatModel(response!);

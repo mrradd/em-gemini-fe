@@ -1,8 +1,8 @@
 import axios from "axios";
-import type ChatResponseDto from "../dtos/ChatResponseDto";
+import type ChatDto from "../dtos/ChatDto";
 import type GetAllChatsResponseDto from "../dtos/GetAllChatsResponseDto";
 import type CreateChatThreadResponseDto from "../dtos/CreateChatThreadResponseDto";
-import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
+import type ChatThreadDto from "../dtos/ChatThreadDto";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 import type GetChatThreadResponseDto from "../dtos/GetChatThreadResponseDto";
 import type GetChatResponseDto from "../dtos/GetChatResponseDto";
@@ -13,7 +13,7 @@ export default class ChatApi {
    * Create a new Chat Thread.
    * @returns new Chat Thread object, or null on failure.
    */
-  public static async createNewChatThread(): Promise<ChatThreadResponseDto | null> {
+  public static async createNewChatThread(): Promise<ChatThreadDto | null> {
     try {
       let response = await axios.post<CreateChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/new`);
 
@@ -74,7 +74,7 @@ export default class ChatApi {
    * @param chatThreadId - ID of the chat thread to find.
    * @returns ChatThreadResponseDto object on success or null otherwise
    */
-  public static async getChatThreadData(chatThreadId: string): Promise<ChatThreadResponseDto | null> {
+  public static async getChatThreadData(chatThreadId: string): Promise<ChatThreadDto | null> {
     try {
       let response = await axios.get<GetChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/${chatThreadId}`);
       
@@ -117,7 +117,7 @@ export default class ChatApi {
    * @param chatThread - ID of the chat thread this chat belongs to.
    * @returns ChatReponseDto on sucess or null otherwise.
    */
-  public static async sendChat(chatPrompt: string, chatThreadId: string): Promise<ChatResponseDto | null> {
+  public static async sendChat(chatPrompt: string, chatThreadId: string): Promise<ChatDto | null> {
     try {
       let response = await axios.post<GetChatResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat`, {prompt: chatPrompt, chatThreadId: chatThreadId});
 

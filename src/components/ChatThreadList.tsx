@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import { UseGlobalStores } from "../stores/UseGlobalStores";
-import type ChatThreadResponseDto from "../dtos/ChatThreadResponseDto";
+import type ChatThreadDto from "../dtos/ChatThreadDto";
 import type ChatThreadModel from "../models/ChatThreadModel";
 import { useEffect, useMemo, useRef } from "react";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
@@ -32,7 +32,7 @@ const ChatThreadList = () => {
   };
 
   const createNewThread = async () => {
-    const result: ChatThreadResponseDto | null = await chatStore.createNewChatThread();
+    const result: ChatThreadDto | null = await chatStore.createNewChatThread();
 
     if(result == null) {
       alert("Failed to create a new Chat Thread.");
@@ -59,7 +59,7 @@ const ChatThreadList = () => {
   };
 
   const viewThread = async (threadId: string) => {
-    const thread: ChatThreadResponseDto | null = await chatStore.getChatThread(threadId);
+    const thread: ChatThreadDto | null = await chatStore.getChatThread(threadId);
 
     if(!thread) {
       alert("There was an issue getting the thread.");

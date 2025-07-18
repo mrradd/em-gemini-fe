@@ -1,5 +1,5 @@
-import type ChatThreadResponseDto from "./ChatThreadResponseDto";
+import type ChatThreadDto from "./ChatThreadDto";
 
 export default interface GetChatThreadResponseDto {
-  thread: ChatThreadResponseDto;
+  thread: ChatThreadDto;
 }
