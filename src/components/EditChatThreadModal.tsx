@@ -2,10 +2,14 @@ import { observer } from "mobx-react";
 import "../styles/EditChatThreadModal.css";
 import "../styles/Modal.css";
 import PublishIcon from '@mui/icons-material/Publish';
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import { useState } from "react";
 
 export interface EditChatModalProps {
   isVisible: boolean;
+  threadName: string;
+  submitAction: () => void;
+  cancelAction: () => void;
 }
 
 export interface EditChatModalState {
@@ -16,12 +20,16 @@ const defaultState = {
   name: "",
 }
 
-const EditChatThreadModal = ({isVisible}: EditChatModalProps) => { 
+const EditChatThreadModal = ({isVisible, threadName, submitAction, cancelAction}: EditChatModalProps) => { 
   const [state, setState] = useState(defaultState);
 
   if(!isVisible) {
     return;
   }
+
+  const onCancel = () => {
+    cancelAction();
+  };
 
   const onNameChange = (e: any) => {
     setState((prev) => {
@@ -33,20 +41,23 @@ const EditChatThreadModal = ({isVisible}: EditChatModalProps) => {
   }
 
   const onSubmit = () => {
-    console.log("$$$herp derp");
-  }
+    submitAction();
+  };
 
   return (
     <div className="modal_backdrop"> 
       <div className="modal">
         <div className="modal_content">
-          <h3>Edit Thread</h3>
+          <h3>Edit '{threadName}'</h3>
           <span>
-            <label>Name: </label>
+            <label>New Name: </label>
             <input onChange={onNameChange} type="text" value={state.name}></input>
           </span>
         </div>
-        <button onClick={onSubmit}><PublishIcon/></button>
+        <div className="modal_buttons">
+          <button title="Submit" onClick={onSubmit}><PublishIcon/></button>
+          <button title="Cancel" onClick={onCancel}><CancelPresentationIcon/></button>
+        </div>
       </div>
     </div>
   );

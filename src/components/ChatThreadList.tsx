@@ -59,7 +59,6 @@ const ChatThreadList = () => {
 
   return (
     <>
-      <EditChatThreadModal isVisible={true}/>
       <h1>Electric Meatball</h1>
       <div className="thread_buttons_container">
         <button title="New Chat Thread" onClick={createNewThread}><AddCommentOutlinedIcon/></button>
