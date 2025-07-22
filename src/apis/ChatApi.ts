@@ -6,6 +6,7 @@ import type ChatThreadDto from "../dtos/ChatThreadDto";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 import type GetChatThreadResponseDto from "../dtos/GetChatThreadResponseDto";
 import type GetChatResponseDto from "../dtos/GetChatResponseDto";
+import type EditChatThreadResponseDto from "../dtos/EditChatThreadResponseDto";
 
 export default class ChatApi {
 
@@ -46,6 +47,28 @@ export default class ChatApi {
     catch (error: any) {
       console.log(`$$$ ERROR deleteChatThread: ${error.message}`);
       return false;
+    }
+  }
+
+  /**
+   * Sends a request to change the chat thread with the given ID.
+   * @param newName - New name for the chat thread.
+   * @param chatThread - ID of the chat thread this chat belongs to.
+   * @returns new name in string form on sucess or null otherwise.
+   */
+  public static async editChatThread(newName: string, chatThreadId: string): Promise<string | null> {
+    try {
+      let response = await axios.post<EditChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/chat/thread/edit`, {newName: newName, chatThreadId: chatThreadId});
+
+      if(response.status !== 200) {
+        throw new Error (`Failed to send the chat... ${response.status}`);
+      }
+
+      return response.data.newName;
+    }
+    catch (error: any) {
+      console.log(`$$$ ERROR sendChat: ${error.message}`);
+      return null;
     }
   }
 
@@ -114,7 +137,7 @@ export default class ChatApi {
   /**
    * Sends a request for a chat with the given prompt.
    * @param chatPrompt - User prompt.
-   * @param chatThread - ID of the chat thread this chat belongs to.
+   * @param chatThreadId - ID of the chat thread this chat belongs to.
    * @returns ChatReponseDto on sucess or null otherwise.
    */
   public static async sendChat(chatPrompt: string, chatThreadId: string): Promise<ChatDto | null> {

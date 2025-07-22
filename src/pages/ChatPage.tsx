@@ -1,4 +1,4 @@
-import "./ChatPage.css"
+import "../styles/ChatPage.css"
 import { observer } from "mobx-react";
 import ChatBox from "../components/ChatBox";
 import ChatList from "../components/ChatList";

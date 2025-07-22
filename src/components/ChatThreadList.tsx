@@ -5,10 +5,9 @@ import type ChatThreadModel from "../models/ChatThreadModel";
 import { useEffect, useMemo, useRef } from "react";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 import { dtoToChatThreadModel } from "../models/ChatThreadModel";
-import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
+import ChatThreadCard from "./ChatThreadCard";
+import EditChatThreadModal from "./EditChatThreadModal";
 
 /**
  * Displays a list of Chat Threads from the database. Also allows for pressing a button to create a new Chat Thread.
@@ -46,37 +45,12 @@ const ChatThreadList = () => {
     } as ChatThreadModel)
   };
 
-  const deleteThread = async (threadId: string) => {
-    const result:boolean = await chatStore.deleteChatThread(threadId);
-
-    if(result) {
-      chatStore.removeChatThread(threadId);
-    }
-  };
-
-  const editThreadDetails = async (threadId: string) => {
-    console.log(`$$$ clicked editThreadDetails ${threadId}`);
-  };
-
-  const viewThread = async (threadId: string) => {
-    const thread: ChatThreadDto | null = await chatStore.getChatThread(threadId);
-
-    if(!thread) {
-      alert("There was an issue getting the thread.");
-    }
-    console.log(thread);
-    chatStore.setWorkingChatThread(thread!);
-  };
-
   const renderChatThreads = useMemo(() => {
     const threads = chatStore.chatThreads.map((thread, index) => {
       return (
-        <div key={index} className="thread_item"> 
-          <div>{thread.title} - {thread.createdDate}</div>
-          <button title="Edit Thread" onClick={() => editThreadDetails(thread.id)}><EditNoteOutlinedIcon/></button>
-          <button title="Delete Thread Forever" onClick={() => deleteThread(thread.id)}><DeleteForeverOutlinedIcon/></button>
-          <button title="View Thread" onClick={() => viewThread(thread.id)}><VisibilityOutlinedIcon/></button>
-        </div>
+        <span key={index}>
+          <ChatThreadCard threadId={thread.id} threadCreatedDate={thread.createdDate} threadTitle={thread.title}/>
+        </span>
       );
     });
 
@@ -85,6 +59,7 @@ const ChatThreadList = () => {
 
   return (
     <>
+      <EditChatThreadModal isVisible={true}/>
       <h1>Electric Meatball</h1>
       <div className="thread_buttons_container">
         <button title="New Chat Thread" onClick={createNewThread}><AddCommentOutlinedIcon/></button>
@@ -92,7 +67,6 @@ const ChatThreadList = () => {
       <div className="thread_container">
         {renderChatThreads}
       </div>
-
     </>
   );
 };

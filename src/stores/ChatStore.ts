@@ -38,8 +38,13 @@ export default class ChatStore {
     return response;
   }
 
-  async getChatThread(chatThreadId: string): Promise<ChatThreadDto | null> {
-    const response: ChatThreadDto | null = await ChatApi.getChatThreadData(chatThreadId);
+  async editChatThreadName(newName: string, threadId: string): Promise<string | null> {
+    const response: string | null = await ChatApi.editChatThread(newName, threadId);
+    return response;
+  }
+
+  async getChatThread(threadId: string): Promise<ChatThreadDto | null> {
+    const response: ChatThreadDto | null = await ChatApi.getChatThreadData(threadId);
     return response;
   }
 
@@ -64,7 +69,7 @@ export default class ChatStore {
     this.chatThreads.splice(idx, 1);
   }
 
-  setWorkingChatThread(thread: ChatThreadDto) {
-    this.workingChatThread = dtoToChatThreadModel(thread);
+  setWorkingChatThreadFromDto(threadDto: ChatThreadDto) {
+    this.workingChatThread = dtoToChatThreadModel(threadDto);
   }
 }
