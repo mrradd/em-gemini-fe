@@ -7,7 +7,6 @@ import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponse
 import { dtoToChatThreadModel } from "../models/ChatThreadModel";
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 import ChatThreadCard from "./ChatThreadCard";
-import EditChatThreadModal from "./EditChatThreadModal";
 
 /**
  * Displays a list of Chat Threads from the database. Also allows for pressing a button to create a new Chat Thread.
