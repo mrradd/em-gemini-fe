@@ -1,7 +1,7 @@
 .the_content {
   display: flex;
   width: 99vw;
-  height: 98vh;
+  height: 97vh;
   flex-direction: column;
   align-items: center;
 }
