@@ -4,10 +4,13 @@ import "../styles/Modal.css";
 import PublishIcon from '@mui/icons-material/Publish';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import { useState } from "react";
+import ChatApi from "../apis/ChatApi";
+import { UseGlobalStores } from "../stores/UseGlobalStores";
 
 export interface EditChatModalProps {
   isVisible: boolean;
   threadName: string;
+  threadId: string;
   submitAction: () => void;
   cancelAction: () => void;
 }
@@ -20,8 +23,9 @@ const defaultState = {
   name: "",
 }
 
-const EditChatThreadModal = ({isVisible, threadName, submitAction, cancelAction}: EditChatModalProps) => { 
+const EditChatThreadModal = ({isVisible, threadName, threadId, submitAction, cancelAction}: EditChatModalProps) => { 
   const [state, setState] = useState(defaultState);
+  const {chatStore} = UseGlobalStores();
 
   if(!isVisible) {
     return;
@@ -40,7 +44,8 @@ const EditChatThreadModal = ({isVisible, threadName, submitAction, cancelAction}
     });
   }
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    await chatStore.editChatThreadName(state.name, threadId)
     submitAction();
   };
 

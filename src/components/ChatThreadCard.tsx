@@ -22,7 +22,6 @@ const ChatThreadCard = ({
   const {chatStore} = UseGlobalStores();
 
   const cancelAction = () => {
-    console.log("$$$ cancel pressed.");
     setShowEditModal(false);
   };
 
@@ -34,13 +33,11 @@ const ChatThreadCard = ({
     }
   };
 
-  const editThreadDetails = async (threadId: string) => {
-    console.log(`$$$ clicked editThreadDetails ${threadId}`);
+  const editThreadDetails = () => {
     setShowEditModal(true);
   };
 
   const submitAction = () => {
-    console.log("$$$ Submit pressed.");
     setShowEditModal(false);
   };
 
@@ -50,15 +47,15 @@ const ChatThreadCard = ({
     if(!thread) {
       alert("There was an issue getting the thread.");
     }
-    console.log(thread);
+
     chatStore.setWorkingChatThreadFromDto(thread!);
   };
 
   return (
     <div className="thread_item">
-      <EditChatThreadModal isVisible={showEditModal} threadName={threadTitle} submitAction={submitAction} cancelAction={cancelAction}/>
+      <EditChatThreadModal isVisible={showEditModal} threadName={threadTitle} threadId={threadId} submitAction={submitAction} cancelAction={cancelAction}/>
       <div>{threadTitle} - {threadCreatedDate}</div>
-      <button title="Edit Thread" onClick={() => editThreadDetails(threadId)}><EditNoteOutlinedIcon/></button>
+      <button title="Edit Thread" onClick={() => editThreadDetails()}><EditNoteOutlinedIcon/></button>
       <button title="Delete Thread Forever" onClick={() => deleteThread(threadId)}><DeleteForeverOutlinedIcon/></button>
       <button title="View Thread" onClick={() => viewThread(threadId)}><VisibilityOutlinedIcon/></button>
     </div>

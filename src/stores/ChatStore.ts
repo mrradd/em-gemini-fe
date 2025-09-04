@@ -6,6 +6,7 @@ import type ChatThreadModel from "../models/ChatThreadModel";
 import type ChatThreadDto from "../dtos/ChatThreadDto";
 import type GetAllChatThreadsResponseDto from "../dtos/GetAllChatThreadsResponseDto";
 import { dtoToChatThreadModel } from "../models/ChatThreadModel";
+import type EditChatThreadResponseDto from "../dtos/EditChatThreadResponseDto";
 
 export default class ChatStore {
   chats = [] as ChatModel[];
@@ -38,8 +39,18 @@ export default class ChatStore {
     return response;
   }
 
-  async editChatThreadName(newName: string, threadId: string): Promise<string | null> {
-    const response: string | null = await ChatApi.editChatThread(newName, threadId);
+  async editChatThreadName(newName: string, threadId: string): Promise<EditChatThreadResponseDto | null> {
+    const idx = this.chatThreads.findIndex((thread) => { return thread.id === threadId; });
+    const response: EditChatThreadResponseDto | null = await ChatApi.editChatThread(newName, threadId);
+
+    if(response && response.title?.length > 0) {
+      
+      //Changing the reference, to trigger renders.
+      this.setChatThreads(this.chatThreads.slice());
+      this.chatThreads[idx].title = response.title;
+      this.workingChatThread.title = response.title;
+    }
+
     return response;
   }
 
@@ -68,8 +79,12 @@ export default class ChatStore {
 
     this.chatThreads.splice(idx, 1);
   }
-
+  
   setWorkingChatThreadFromDto(threadDto: ChatThreadDto) {
     this.workingChatThread = dtoToChatThreadModel(threadDto);
+  }
+
+  private setChatThreads(arr: ChatThreadModel[]){
+    this.chatThreads = arr;
   }
 }

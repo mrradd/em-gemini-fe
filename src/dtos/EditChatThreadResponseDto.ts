@@ -1,3 +1,6 @@
 export default interface EditChatThreadResponseDto {
-  newName: string;
+  id: string;
+  title: string;
+  created_date: string;
+  updated_date: string;
 }

@@ -52,22 +52,21 @@ export default class ChatApi {
 
   /**
    * Sends a request to change the chat thread with the given ID.
-   * @param newName - New name for the chat thread.
+   * @param newTitle - New name for the chat thread.
    * @param chatThread - ID of the chat thread this chat belongs to.
-   * @returns new name in string form on sucess or null otherwise.
+   * @returns updated in string form on sucess or null otherwise.
    */
-  public static async editChatThread(newName: string, chatThreadId: string): Promise<string | null> {
+  public static async editChatThread(newTitle: string, chatThreadId: string): Promise<EditChatThreadResponseDto | null> {
     try {
-      let response = await axios.post<EditChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/chat/thread/edit`, {newName: newName, chatThreadId: chatThreadId});
-
+      let response = await axios.patch<EditChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/edit`, {newTitle: newTitle, chatThreadId: chatThreadId});
       if(response.status !== 200) {
-        throw new Error (`Failed to send the chat... ${response.status}`);
+        throw new Error (`Failed to edit the chat... ${response.status}`);
       }
 
-      return response.data.newName;
+      return response.data;
     }
     catch (error: any) {
-      console.log(`$$$ ERROR sendChat: ${error.message}`);
+      console.log(`$$$ ERROR editChatThread: ${error.message}`);
       return null;
     }
   }
@@ -121,7 +120,6 @@ export default class ChatApi {
     try {
       let response = await axios.get<GetAllChatThreadsResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/all`);
 
-      console.log(response);
       if(response.status !== 200) {
         throw new Error (`Failed to get the chat threads... ${response.status}`);
       }
