@@ -23,15 +23,8 @@ const ChatThreadCard = ({
   const {chatStore} = UseGlobalStores();
 
   useEffect(() => {
-    if(chatStore.workingChatThread.id === threadId){
-      setIsSelected(true)
-    }
-    else if(chatStore.workingChatThread.id !== threadId){
-      setIsSelected(false)
-    }
-  }, [
-    chatStore.workingChatThread
-  ]);
+    setIsSelected(chatStore.workingChatThread.id === threadId)
+  }, [chatStore.workingChatThread]);
 
   const cancelAction = () => {
     setShowEditModal(false);
