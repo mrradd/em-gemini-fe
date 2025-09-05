@@ -5,21 +5,33 @@ import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import EditChatThreadModal from "./EditChatThreadModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ChatThreadCardProps {
-  threadTitle: string;
   threadCreatedDate: string;
   threadId: string;
+  threadTitle: string;
 }
 
 const ChatThreadCard = ({
-  threadTitle,
   threadCreatedDate,
   threadId,
+  threadTitle,
 }: ChatThreadCardProps) => {
   const [showEditModal, setShowEditModal] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const {chatStore} = UseGlobalStores();
+
+  useEffect(() => {
+    if(chatStore.workingChatThread.id === threadId){
+      setIsSelected(true)
+    }
+    else if(chatStore.workingChatThread.id !== threadId){
+      setIsSelected(false)
+    }
+  }, [
+    chatStore.workingChatThread
+  ]);
 
   const cancelAction = () => {
     setShowEditModal(false);
@@ -52,7 +64,7 @@ const ChatThreadCard = ({
   };
 
   return (
-    <div className="thread_item">
+    <div className={`thread_item ${isSelected ? "chat_thread_selected" : null}`}>
       <EditChatThreadModal isVisible={showEditModal} threadName={threadTitle} threadId={threadId} submitAction={submitAction} cancelAction={cancelAction}/>
       <div>{threadTitle} - {threadCreatedDate}</div>
       <button title="Edit Thread" onClick={() => editThreadDetails()}><EditNoteOutlinedIcon/></button>
