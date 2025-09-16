@@ -58,7 +58,6 @@ const ChatThreadList = () => {
 
   return (
     <>
-      <h1>Electric Meatball</h1>
       <div className="thread_buttons_container">
         <button title="New Chat Thread" onClick={createNewThread}><AddCommentOutlinedIcon/></button>
       </div>

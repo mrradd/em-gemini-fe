@@ -77,3 +77,9 @@ pre {
 .thread_buttons_container {
   margin-bottom: var(--margin-md);
 }
+
+@media (max-width: 500px) {
+  .thread_item {
+    padding-left: 5px;
+  }
+}
