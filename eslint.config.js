@@ -8,6 +8,9 @@ import { globalIgnores } from 'eslint/config'
 export default tseslint.config([
   globalIgnores(['dist']),
   {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "false"
+    },
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
@@ -20,4 +23,5 @@ export default tseslint.config([
       globals: globals.browser,
     },
   },
+
 ])

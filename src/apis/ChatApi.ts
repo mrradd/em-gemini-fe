@@ -16,10 +16,10 @@ export default class ChatApi {
    */
   public static async createNewChatThread(): Promise<ChatThreadDto | null> {
     try {
-      let response = await axios.post<CreateChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/new`);
+      const response = await axios.post<CreateChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/new`);
 
-      if(response?.status !== 201) {
-        throw new Error (`Failed to create the Chat Thread... ${response.status}`);
+      if (response?.status !== 201) {
+        throw new Error(`Failed to create the Chat Thread... ${response.status}`);
       }
 
       return response.data.chatThread;
@@ -38,8 +38,8 @@ export default class ChatApi {
     try {
       let response = await axios.delete<any>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/${threadId}`);
 
-      if(response?.status !== 200) {
-        throw new Error (`Failed to create the Chat Thread... ${response.status}`);
+      if (response?.status !== 200) {
+        throw new Error(`Failed to create the Chat Thread... ${response.status}`);
       }
 
       return true;
@@ -58,9 +58,9 @@ export default class ChatApi {
    */
   public static async editChatThread(newTitle: string, chatThreadId: string): Promise<EditChatThreadResponseDto | null> {
     try {
-      let response = await axios.patch<EditChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/edit`, {newTitle: newTitle, chatThreadId: chatThreadId});
-      if(response.status !== 200) {
-        throw new Error (`Failed to edit the chat... ${response.status}`);
+      let response = await axios.patch<EditChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/edit`, { newTitle: newTitle, chatThreadId: chatThreadId });
+      if (response.status !== 200) {
+        throw new Error(`Failed to edit the chat... ${response.status}`);
       }
 
       return response.data;
@@ -79,8 +79,8 @@ export default class ChatApi {
     try {
       let response = await axios.get<GetAllChatsResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/all`);
 
-      if(response.status !== 200) {
-        throw new Error (`Failed to get the chats... ${response.status}`);
+      if (response.status !== 200) {
+        throw new Error(`Failed to get the chats... ${response.status}`);
       }
 
       return response.data;
@@ -99,9 +99,9 @@ export default class ChatApi {
   public static async getChatThreadData(chatThreadId: string): Promise<ChatThreadDto | null> {
     try {
       let response = await axios.get<GetChatThreadResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/${chatThreadId}`);
-      
-      if(response.status !== 200) {
-        throw new Error (`Failed to get the chat thread... ${response.status}`);
+
+      if (response.status !== 200) {
+        throw new Error(`Failed to get the chat thread... ${response.status}`);
       }
 
       return response.data.thread;
@@ -120,8 +120,8 @@ export default class ChatApi {
     try {
       let response = await axios.get<GetAllChatThreadsResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat/thread/all`);
 
-      if(response.status !== 200) {
-        throw new Error (`Failed to get the chat threads... ${response.status}`);
+      if (response.status !== 200) {
+        throw new Error(`Failed to get the chat threads... ${response.status}`);
       }
 
       return response.data;
@@ -140,10 +140,10 @@ export default class ChatApi {
    */
   public static async sendChat(chatPrompt: string, chatThreadId: string): Promise<ChatDto | null> {
     try {
-      let response = await axios.post<GetChatResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat`, {prompt: chatPrompt, chatThreadId: chatThreadId});
+      let response = await axios.post<GetChatResponseDto>(`${import.meta.env.VITE_BASE_URL}/gemini/chat`, { prompt: chatPrompt, chatThreadId: chatThreadId });
 
-      if(response.status !== 201) {
-        throw new Error (`Failed to send the chat... ${response.status}`);
+      if (response.status !== 201) {
+        throw new Error(`Failed to send the chat... ${response.status}`);
       }
 
       return response.data.chat;
